@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CareVo Skip — Order ahead. Skip the counter.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="variables.css">
+<style>
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--color-bg); color:var(--color-text);
+    font-family:var(--font-family); -webkit-font-smoothing:antialiased;
+    transition:background var(--duration-hover) var(--ease-out), color var(--duration-hover) var(--ease-out);
+  }
+  @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important;}}
+
+  h1{font-size:var(--fs-h1); line-height:var(--lh-h1); letter-spacing:var(--ls-h1); font-weight:var(--fw-h1); margin:0;}
+  h2{font-size:var(--fs-h2); line-height:var(--lh-h2); letter-spacing:var(--ls-h2); font-weight:var(--fw-h2); margin:0;}
+  h3{font-size:var(--fs-h3); line-height:var(--lh-h3); letter-spacing:var(--ls-h3); font-weight:var(--fw-h3); margin:0;}
+  p{font-size:var(--fs-body); line-height:var(--lh-body); font-weight:var(--fw-body); color:var(--color-text-soft); margin:0;}
+  .body-lg{font-size:var(--fs-body-lg); line-height:var(--lh-body-lg); font-weight:var(--fw-body-lg);}
+  .caption{font-size:var(--fs-caption); line-height:var(--lh-caption); letter-spacing:var(--ls-caption); font-weight:var(--fw-caption); color:var(--color-text-soft);}
+  a{color:inherit;}
+
+  .container{max-width:var(--container-desktop); margin:0 auto; padding:0 var(--gutter);}
+
+  /* ---- nav ---- */
+  nav{
+    height:var(--nav-height-desktop); background:var(--color-primary);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 6vw; position:sticky; top:0; z-index:50;
+  }
+  .logo{
+    font-size:var(--fs-h3); font-weight:700; color:#FFFFFF;
+  }
+  .nav-links{display:flex; gap:var(--space-xl); align-items:center;}
+  .nav-links a{
+    color:#FFFFFF; font-size:var(--fs-body); font-weight:400; opacity:0.85;
+    transition:color var(--duration-hover) var(--ease-out);
+  }
+  .nav-links a:hover{color:var(--color-secondary); opacity:1;}
+  #theme-toggle{
+    background:transparent; border:1px solid rgba(255,255,255,0.3); color:#FFFFFF;
+    border-radius:var(--radius-btn); padding:8px 12px; font-size:13px; cursor:pointer;
+  }
+
+  /* ---- buttons ---- */
+  .btn{
+    display:inline-block; font-size:var(--fs-button); line-height:var(--lh-button);
+    letter-spacing:var(--ls-button); font-weight:var(--fw-button);
+    padding:13px 24px; border-radius:var(--radius-btn); cursor:pointer;
+    transition:transform var(--duration-press) var(--ease-out), box-shadow var(--duration-hover) var(--ease-out), background var(--duration-hover) var(--ease-out);
+  }
+  .btn:active{transform:scale(0.98);}
+  .btn-primary{background:var(--color-primary); color:#FFFFFF; border:none;}
+  .btn-primary:hover{box-shadow:var(--shadow-hover); filter:brightness(1.08);}
+  .btn-secondary{background:transparent; color:var(--color-secondary); border:2px solid var(--color-secondary);}
+  .btn-secondary:hover{box-shadow:var(--shadow-hover);}
+  .btn-ghost{background:transparent; color:var(--color-text); border:none;}
+
+  /* ---- hero ---- */
+  .hero{text-align:center; padding:12vh 6vw 9vh;}
+  .eyebrow{
+    display:inline-block; font-size:var(--fs-caption); font-weight:600; letter-spacing:var(--ls-caption);
+    color:var(--color-secondary); background:rgba(90,61,255,0.08); border-radius:20px;
+    padding:6px 14px; margin-bottom:var(--space-lg);
+  }
+  .hero h1{max-width:16ch; margin:0 auto;}
+  .hero .body-lg{color:var(--color-text-soft); max-width:52ch; margin:var(--space-lg) auto var(--space-xl);}
+  .hero-ctas{display:flex; gap:var(--space-md); justify-content:center; flex-wrap:wrap;}
+
+  section{padding:9vh 6vw; max-width:var(--container-desktop); margin:0 auto;}
+  .section-head{max-width:640px; margin:0 auto var(--space-xxl); text-align:center;}
+  .section-head p{margin-top:var(--space-sm);}
+
+  /* ---- glass cards ---- */
+  .glass{
+    background:color-mix(in srgb, var(--color-surface) 70%, transparent);
+    backdrop-filter:blur(14px) saturate(140%);
+    -webkit-backdrop-filter:blur(14px) saturate(140%);
+    border:1px solid color-mix(in srgb, var(--color-secondary) 12%, var(--color-border));
+    border-radius:var(--radius-card);
+    box-shadow:var(--shadow-card);
+    padding:var(--space-lg);
+    transition:transform var(--duration-hover) var(--ease-out), box-shadow var(--duration-hover) var(--ease-out);
+  }
+  .glass:hover{transform:translateY(-3px); box-shadow:var(--shadow-hover);}
+
+  .steps{display:grid; grid-template-columns:repeat(4,1fr); gap:var(--space-md);}
+  .step-num{
+    width:32px; height:32px; border-radius:50%; background:var(--color-secondary); color:#FFFFFF;
+    font-weight:700; font-size:13px; display:flex; align-items:center; justify-content:center;
+    margin-bottom:var(--space-md);
+  }
+  .step h3{font-size:19px; margin-bottom:var(--space-xs);}
+
+  .why-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:var(--space-md);}
+  .why-card .chip{
+    font-size:12px; font-weight:600; color:var(--color-secondary);
+    background:rgba(90,61,255,0.08); border-radius:20px; padding:5px 12px;
+    display:inline-block; margin-bottom:var(--space-md);
+  }
+  .why-card h3{font-size:19px; margin-bottom:var(--space-xs);}
+
+  .showcase{display:grid; grid-template-columns:1fr 1fr; gap:var(--space-xxl); align-items:center;}
+  .track-row{display:flex; flex-direction:column; gap:var(--space-sm);}
+  .track{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:14px 18px;
+  }
+  .track .name{font-weight:600; color:var(--color-text);}
+  .status-pill{font-size:12px; font-weight:600; padding:4px 10px; border-radius:20px;}
+  .status-ready{background:rgba(0,200,83,0.12); color:var(--color-success);}
+  .status-prep{background:rgba(255,171,0,0.14); color:#9A6A0C;}
+
+  .cta-band{text-align:center; padding:6vh 6vw;}
+  .cta-band .body-lg{color:var(--color-text-soft); margin:var(--space-md) auto var(--space-xl); max-width:46ch;}
+  .store-badge{
+    border:1px solid var(--color-border); border-radius:var(--radius-btn); padding:12px 20px;
+    font-size:13px; font-weight:600; color:var(--color-text-soft); display:inline-block;
+  }
+
+  footer{
+    border-top:1px solid var(--color-border); padding:var(--space-xl) 6vw;
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:var(--space-md);
+  }
+  footer a{border-bottom:1px solid transparent;}
+  footer a:hover{border-color:var(--color-text-soft);}
+
+  @media (max-width:1024px){.steps{grid-template-columns:1fr 1fr;} .why-grid{grid-template-columns:1fr;} .showcase{grid-template-columns:1fr;}}
+  @media (max-width:768px){.nav-links a:not(#theme-toggle-wrap){display:none;}}
+  @media (max-width:640px){.steps{grid-template-columns:1fr;} nav{height:var(--nav-height-mobile);}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">CareVo Skip</div>
+  <div class="nav-links">
+    <a href="#how">How it works</a>
+    <a href="#why">Why Skip</a>
+    <button id="theme-toggle" onclick="toggleTheme()">🌓 Theme</button>
+  </div>
+</nav>
+
+<div class="hero">
+  <span class="eyebrow">Pickup, not delivery</span>
+  <h1>Order ahead. Skip the counter.</h1>
+  <p class="body-lg">Browse local restaurants, pay in the app, get a pickup code. Walk in, show your code, collect your food — no delivery fee, no queue, no waiting for it to arrive cold.</p>
+  <div class="hero-ctas">
+    <a class="btn btn-primary" href="#how">See how it works</a>
+    <a class="btn btn-secondary" href="#why">Why it's different</a>
+  </div>
+</div>
+
+<section id="how">
+  <div class="section-head">
+    <h2>Four steps. No line at any of them.</h2>
+    <p>From browsing to walking out with your order — the whole flow happens before you leave the house.</p>
+  </div>
+  <div class="steps">
+    <div class="glass step">
+      <div class="step-num">1</div>
+      <h3>Browse nearby</h3>
+      <p>See restaurants near you and order what you want, straight from your phone.</p>
+    </div>
+    <div class="glass step">
+      <div class="step-num">2</div>
+      <h3>Pay in the app</h3>
+      <p>Pay securely before you leave — nothing to settle at the counter.</p>
+    </div>
+    <div class="glass step">
+      <div class="step-num">3</div>
+      <h3>Get your code</h3>
+      <p>A pickup code is generated the moment your order's confirmed.</p>
+    </div>
+    <div class="glass step">
+      <div class="step-num">4</div>
+      <h3>Walk in, collect</h3>
+      <p>Show your code at the counter. No queue, no wait — just pickup.</p>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="section-head"><h2>Built for people who value their time.</h2></div>
+  <div class="why-grid">
+    <div class="glass why-card">
+      <span class="chip">No delivery markup</span>
+      <h3>You pay for food, not the trip</h3>
+      <p>Pickup means no delivery fee stacked on top of your order — and no wait for it to arrive lukewarm.</p>
+    </div>
+    <div class="glass why-card">
+      <span class="chip">No counter queue</span>
+      <h3>Arrive when it's ready</h3>
+      <p>Order ahead from home or your desk. By the time you get there, it's already made.</p>
+    </div>
+    <div class="glass why-card">
+      <span class="chip">Growing network</span>
+      <h3>New restaurants, regularly</h3>
+      <p>Live now at select partner restaurants, with more onboarding continuously.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="glass showcase" style="padding:5vh 6vw;">
+    <div>
+      <h2>Track every order, each with its own code.</h2>
+      <p style="margin-top:var(--space-md);">Ordering for the whole desk? Every order gets its own pickup code and its own live status — all visible from one screen.</p>
+    </div>
+    <div class="track-row">
+      <div class="track glass"><span class="name">Anna's Kitchen — A47</span><span class="status-pill status-ready">Ready</span></div>
+      <div class="track glass"><span class="name">Vasanta Bhavan — B12</span><span class="status-pill status-prep">Preparing</span></div>
+      <div class="track glass"><span class="name">Sangeetha — C08</span><span class="status-pill status-prep">Preparing</span></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="glass cta-band">
+    <h2>Coming soon to the Play Store.</h2>
+    <p class="body-lg">CareVo Skip is in final testing. Once it's live, you'll be able to download it and start ordering ahead at partner restaurants near you.</p>
+    <span class="store-badge">Google Play — coming soon</span>
+  </div>
+</section>
+
+<footer>
+  <span class="caption">© 2026 CareVo. Part of the <a href="https://carevo.co.in">carevo.co.in</a> family.</span>
+  <span class="caption"><a href="https://carevo.co.in/delete-account/">Delete account</a> &nbsp;·&nbsp; <a href="https://carevo.co.in">Main site</a></span>
+</footer>
+
+<script>
+  function toggleTheme(){
+    const root = document.documentElement;
+    const current = root.getAttribute('data-theme');
+    root.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+  }
+</script>
+
+</body>
+</html>
