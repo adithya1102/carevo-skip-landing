@@ -25,6 +25,11 @@
   --color-placeholder: #9E9E9E;
   --color-disabled-bg: #B0B0B0;
 
+  /* ---- color: overlay ----
+     Pre-composed alpha of --color-primary at 50%. Kept as its own token
+     because Tailwind cannot inject an alpha channel into an opaque var(). */
+  --color-overlay: rgba(10,17,40,0.5);
+
   /* ---- type ---- */
   --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
@@ -77,13 +82,5 @@
   --color-border: var(--color-border-dark);
 }
 
-/* Respect system preference by default; explicit [data-theme] attr overrides it */
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --color-bg: #121212;
-    --color-surface: #1E1E1E;
-    --color-text: #E0E0E0;
-    --color-text-soft: #A8A8AE;
-    --color-border: var(--color-border-dark);
-  }
-}
+/* Light mode is the default regardless of OS preference.
+   Dark mode activates only via the toggle setting [data-theme="dark"]. */
